@@ -221,6 +221,9 @@ Dotazy:
       https://stackoverflow.com/questions/49556755/regularexpression-validation-attribute-not-working-correctly
     - Zkusil jsem ten regulární výraz a stejnì to nefunguje :-(
 
+ - Paginace
+   https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application
+
 
 #################################################################################################*/
 
