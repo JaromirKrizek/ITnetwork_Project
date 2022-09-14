@@ -202,7 +202,9 @@ Insurance_ASP - Závìreèný projekt
    - Dorùzných pohledù pøidána podmínka @if (User.IsInRole("Admin")), která zobrazuje nìkterá
      editaèní tlaèítka pouze administrátorovi (Základy lekce 15)
 
+  
 
+---------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------
 Dotazy:
 
