@@ -1,0 +1,119 @@
+﻿<!------------------------------------------------------------------------------------------------- 
+- Toto view obsluhuje metodu PersonsController.Detail  
+- Zobrazuje formulář pro zadání nového pojištěnce
+- Nejedná se o kompletní stránku, ale pouze o její část, která se vloží do layoutu.
+- Znak zavináč uvádí C# kód v HTML souboru, takzvaý Razor.
+-------------------------------------------------------------------------------------------------->
+
+<!-- Definuje, že modelem tohoto view je objekt třídy Person -->
+@model Insurance_ASP.Models.Person
+
+@{
+    ViewData["Title"] = "Detail pojištěnce";  // Upraveno - Nastavení titulku
+}
+
+<!-------------------------------------------------------------------------------------------------
+Obsah vkládané stránky 
+-------------------------------------------------------------------------------------------------->
+
+<div class="center-800">
+
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+
+    <div class="d-flex justify-content-start flex-wrap mb-3">
+        <div class="pe-5">
+            <!-- Tilda (~) pro získání cesty do wwwroot/, kde se složka s obrázky nalézá.-->
+            <img src="~/images/avatar.png" alt="Obrázek" class="img-fluid" />
+        </div>
+        <div>
+            <h1>@Model.FirstName @Model.LastName</h1>
+    
+            <div class="d-flex justify-content-start flex-wrap">
+                <div class="pe-5"> <!-- Adresa -->
+                    @{
+                        if (String.IsNullOrWhiteSpace(Model.Street))
+                        {
+                            <p class="mb-1">@Model.City @Model.HouseNumber</p>
+                        }
+                        else
+                        {
+                            <p class="mb-1">@Model.Street @Model.HouseNumber</p>
+                            <p class="mb-1">@Model.City</p>
+                        }
+                    }
+                    <p class="mb-1">@Model.PostCode</p>
+                </div>
+                <div> <!-- Kontakt -->
+                    <p class="mb-1 me-1">@Model.Email</p>
+                    <p class="mb-1">@Model.Phone</p>
+                </div>
+            </div>
+        </div>
+     </div>
+    
+    <!-- Tabulka sjednaných pojištění daného pojištěnce -->
+    @if (Model.Insurances.Count != 0)
+    {
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Smlouva</th>
+                        <th>Typ pojištění</th>
+                        <th>Předmět</th>
+                        <th>Částka</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var insurance in Model.Insurances)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-controller="Insurances" asp-action="Details" 
+                               asp-route-id="@insurance.Id">SM-@insurance.Id</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => insurance.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => insurance.Subject)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => insurance.Amount)
+                            </td>
+                            <td>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a asp-controller="Insurances" asp-action="Edit" 
+                                       asp-route-id="@insurance.Id" class="btn btn-warning me-1">Editovat</a>
+                                    <a asp-controller="Insurances" asp-action="Delete" 
+                                       asp-route-id="@insurance.Id" class="btn btn-danger">Odstranit</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <hr />
+    }
+    
+    <div class="d-flex justify-content-center flex-wrap">
+        <!-- Tlačítko přidat pojištění, Editovat pojištěnce, Odstranit pojištěnce -->
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-controller="Insurances" asp-action="Create" class="btn btn-primary mx-1 mb-1">Přidat pojištění</a>
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning mx-1 mb-1">Editovat pojištěnce</a>
+            <a asp-action="Delete" asp-route-id="@Model?.Id" class="btn btn-danger mx-1 mb-1">Odstranit pojištěnce</a>
+        }
+        <a asp-action="Index" class="btn btn-primary mx-1 mb-1">Zpět na seznam pojištěnců</a>
+    </div>
+
+</div>
+
+

@@ -1,0 +1,149 @@
+﻿<!------------------------------------------------------------------------------------------------- 
+- Toto view obsluhuje metodu InsurancesController.Detail  
+- Zobrazuje formulář pro zadání nového pojištěnce
+- Nejedná se o kompletní stránku, ale pouze o její část, která se vloží do layoutu.
+- Znak zavináč uvádí C# kód v HTML souboru, takzvaý Razor.
+-------------------------------------------------------------------------------------------------->
+
+<!-- Definuje, že modelem tohoto view je objekt třídy Insurance -->
+@model Insurance_ASP.Models.Insurance
+
+@{
+    ViewData["Title"] = "Detail pojistné smlouvy";  // Upraveno - Nastavení titulku
+}
+
+<!-------------------------------------------------------------------------------------------------
+Obsah vkládané stránky 
+-------------------------------------------------------------------------------------------------->
+
+<div class="center-800">
+
+    <!-- Hlavní nadpis stránky -->
+    <h1>@ViewData["Title"] SM-@Model.Id</h1>
+    <hr />
+    
+    <!-- Shrnutí pojištěnce -->
+    <dl class="row">
+        <dt class = "col-sm-3">
+            Pojištěnec
+        </dt>
+        <dd class = "col-sm-9">
+            <a asp-controller="Persons" asp-action="Details" asp-route-id="@ViewBag.Person.Id">
+               @ViewBag.Person.FirstName @ViewBag.Person.LastName</a>
+        </dd>
+    </dl>
+    <hr />
+    
+    <!-- Detaily pojistné smlouvy -->
+    <dl class="row">
+        <dt class = "col-sm-3">
+            Číslo smlouvy
+        </dt>
+        <dd class = "col-sm-9">
+            SM-@Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-3">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+        <dt class = "col-sm-3">
+            @Html.DisplayNameFor(model => model.ValidFrom)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.ValidFrom)
+        </dd>
+        <dt class = "col-sm-3">
+            @Html.DisplayNameFor(model => model.ValidTo)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.ValidTo)
+        </dd>
+    </dl>
+    
+    <!-- Tabulka pojistných událostí daného pojištění -->
+    @if (Model.Incidents.Count != 0)
+    {
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Pojistná událost</th>
+                        <th>Datum</th>
+                        <th>Stav</th>
+                        <th>Výše plnění</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var incident in Model.Incidents)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-controller="Incidents" asp-action="Details" 
+                                   asp-route-id="@incident.Id">PU-@incident.Id</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => incident.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => incident.Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => incident.Amount)
+                            </td>
+                            <td>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a asp-controller="Incidents" asp-action="Edit" 
+                                       asp-route-id="@incident.Id" class="btn btn-warning me-1">Editovat</a>
+                                    <a asp-controller="Incidents" asp-action="Delete" 
+                                       asp-route-id="@incident.Id" class="btn btn-danger">Odstranit</a>                                    
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <hr />
+    }
+    
+    <!-- Tlačítka   -->
+    <div class="d-flex justify-content-center flex-wrap">
+    
+        @if (User.IsInRole("Admin"))
+        {
+            <!-- Přidat pojistnou událost -->
+            <a asp-controller="Incidents" asp-action="Create" class="btn btn-primary me-2 mb-1">Přidat událost</a>
+    
+            <!-- Editovat pojištění -->
+            <a asp-action="Edit" asp-route-id="@Model?.Id"
+               class="btn btn-warning me-2 mb-1">Editovat pojištění</a>
+
+            <!-- Odstranit pojištění -->
+            <a asp-action="Delete" asp-route-id="@Model?.Id" class="btn btn-danger me-2 mb-1">Odstranit pojištění</a>            
+        }
+    
+        <!-- Zpět na seznam všech exitujících pojištění -->
+        <a asp-action="Index" class="btn btn-primary me-2 mb-1">Zpět na seznam pojištění</a>
+    
+    </div>
+
+</div>

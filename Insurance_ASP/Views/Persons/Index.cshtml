@@ -1,0 +1,71 @@
+﻿<!------------------------------------------------------------------------------------------------- 
+- Toto view obsluhuje metodu PersonsController.Index  
+- Zobrazuje seznam pojištěnců
+- Nejedná se o kompletní stránku, ale pouze o její část, která se vloží do layoutu.
+- Znak zavináč uvádí C# kód v HTML souboru, takzvaý Razor.
+-------------------------------------------------------------------------------------------------->
+
+<!-- Definuje, že modelem tohoto view je kolekce objektů třídy Person -->
+@model IEnumerable<Insurance_ASP.Models.Person>
+
+@{
+    ViewData["Title"] = "Pojištěnci";  // Upraveno - Nastavení titulku
+}
+
+<!-------------------------------------------------------------------------------------------------
+Obsah vkládané stránky 
+-------------------------------------------------------------------------------------------------->
+
+<!-- Hlavní nadpis stránky -->
+<h1>@ViewData["Title"]</h1>
+
+@if (User.IsInRole("Admin"))
+{
+    <p class="text-center">
+        <a asp-action="Create" class="btn btn-primary">Nový pojištěnec</a>
+    </p>
+}
+
+<!-- Tabulka s pojištěnci -->
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Jméno</th>
+                <th>Bydliště</th>
+                <th>@Html.DisplayNameFor(model => model.Email)</th>
+                <th>@Html.DisplayNameFor(model => model.Phone)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var person in Model) 
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@person.Id">@person.FirstName @person.LastName</a>
+                    </td>
+                    <td>
+                        @person.Street @person.HouseNumber, @person.PostCode @person.City
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => person.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => person.Phone)
+                    </td>
+                    <td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@person.Id" class="btn btn-warning me-1">Editovat</a>
+                            <a asp-action="Delete" asp-route-id="@person.Id" class="btn btn-danger">Odstranit</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+

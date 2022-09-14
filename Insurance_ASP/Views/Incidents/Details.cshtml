@@ -1,0 +1,116 @@
+﻿<!------------------------------------------------------------------------------------------------- 
+- Toto view obsluhuje metodu IncidentsController.Detail  
+- Zobrazuje formulář pro zadání nového pojištěnce
+- Nejedná se o kompletní stránku, ale pouze o její část, která se vloží do layoutu.
+- Znak zavináč uvádí C# kód v HTML souboru, takzvaý Razor.
+-------------------------------------------------------------------------------------------------->
+
+<!-- Definuje, že modelem tohoto view je objekt třídy Incident -->
+@model Insurance_ASP.Models.Incident
+
+@{
+    ViewData["Title"] = "Detail pojistné události";  // Upraveno - Nastavení titulku
+}
+
+<!-------------------------------------------------------------------------------------------------
+Obsah vkládané stránky 
+-------------------------------------------------------------------------------------------------->
+
+<div class="center-800">
+
+    <h1>@ViewData["Title"] PU-@Model.Id</h1>
+    <hr />
+    
+    <!-- Shrnutí pojištěnce a smlouvy -->
+    <dl class="row">
+        <dt class="col-sm-3">
+            Pojištěnec
+        </dt>
+        <dd class="col-sm-9">
+            <a asp-controller="Persons" asp-action="Details" asp-route-id="@ViewBag.Person.Id">
+                @ViewBag.Person.FirstName @ViewBag.Person.LastName
+            </a>
+        </dd>
+        <dt class="col-sm-3">
+            Pojistná smlouva
+        </dt>
+        <dd class="col-sm-9">
+            <a asp-controller="Insurances" asp-action="Details" asp-route-id="@ViewBag.Insurance.Id">
+                SM-@ViewBag.Insurance.Id
+            </a>
+        </dd>
+        <dt class="col-sm-3">
+            Typ pojištění
+        </dt>
+        <dd class="col-sm-9">
+            @ViewBag.Insurance.Type
+        </dd>
+        <dt class="col-sm-3">
+            Předmět pojištění
+        </dt>
+        <dd class="col-sm-9">
+            @ViewBag.Insurance.Subject
+        </dd>
+    </dl>   
+    <hr /> 
+    
+    <!-- Parametry události -->
+    <dl class="row">
+        <dt class="col-sm-3">
+            Číslo pojistné události
+        </dt>
+        <dd class="col-sm-9">
+            PU-@Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+    </dl>
+    <hr /> 
+    
+    <!-- Tlačítka   -->
+    <div class="d-flex justify-content-center flex-wrap">
+    
+        @if (User.IsInRole("Admin"))
+        {
+            <!-- Editovat pojistnou událost -->
+            <a asp-action="Edit" asp-route-id="@Model?.Id"
+               class="btn btn-warning me-2 mb-1">Editovat událost</a>
+
+            <!-- Odstranit pojistnou událost -->
+            <a asp-action="Delete" asp-route-id="@Model?.Id" 
+               class="btn btn-danger me-2 mb-1">Odstranit událost</a>           
+        }
+
+        <!-- Zpět na seznam všech exitujících událostí -->
+        <a asp-action="Index" 
+           class="btn btn-primary me-2 mb-1">Zpět na seznam pojistných událostí</a>
+    </div>
+
+</div>
+
+
+
+
+

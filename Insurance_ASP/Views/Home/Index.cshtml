@@ -1,0 +1,28 @@
+﻿<!------------------------------------------------------------------------------------------------- 
+- Toto view obsluhuje metodu HomeController.Index  
+- Zobrazuje seznam pojištěnců
+- Nejedná se o kompletní stránku, ale pouze o její část, která se vloží do layoutu.
+- Znak zavináč uvádí C# kód v HTML souboru, takzvaý Razor.
+-------------------------------------------------------------------------------------------------->
+
+<!-- Toto view nemá definovanou žádnou modelovou třídu -->
+
+@{
+    ViewData["Title"] = "PojištěníApp";  // Upraveno - Nastavení titulku
+}
+
+<!-------------------------------------------------------------------------------------------------
+Obsah vkládané stránky 
+-------------------------------------------------------------------------------------------------->
+
+<!-- Svislý flexbox vycentruje obsah ve směru své osy i kolmo na ni -->
+<div class="d-flex flex-column justify-content-center align-items-center mt-sm-5">
+    <h1 class="display-4">PojištěníApp</h1>
+    <h1 class="display-4 mb-4 mb-sm-5">Vítejte v aplikaci!</h1>
+
+    <!-- Tlačítka na seznamy pojištěnců, pojištění, pojistných událostí -->
+    <a asp-controller="Persons" asp-action="Index" class="btn btn-primary btn-custom mb-3">Pojištěnci</a>
+    <a asp-controller="Insurances" asp-action="Index" class="btn btn-primary btn-custom mb-3">Pojištění</a>
+    <a asp-controller="Incidents" asp-action="Index" class="btn btn-primary btn-custom">Události</a>
+
+</div>

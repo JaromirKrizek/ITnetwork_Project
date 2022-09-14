@@ -1,0 +1,115 @@
+﻿<!------------------------------------------------------------------------------------------------- 
+- Toto view obsluhuje metodu PersonsController.Create  
+- Zobrazuje formulář pro zadání nového pojištěnce
+- Nejedná se o kompletní stránku, ale pouze o její část, která se vloží do layoutu.
+- Znak zavináč uvádí C# kód v HTML souboru, takzvaý Razor.
+-------------------------------------------------------------------------------------------------->
+
+<!-- Definuje, že modelem tohoto view je objekt třídy Person -->
+@model Insurance_ASP.Models.Person
+
+@{
+    ViewData["Title"] = "Přidat pojištěnce";  // Upraveno - Nastavení titulku
+}
+
+<!-------------------------------------------------------------------------------------------------
+Obsah vkládané stránky 
+-------------------------------------------------------------------------------------------------->
+
+<div class="center-800">
+
+    <!-- Hlavní nadpis stránky -->
+    <h1>@ViewData["Title"]</h1>
+    <hr class="mb-sm-4" />
+
+    <!-- Formulář -->
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <!-- Jeden řádek formuláře s více elementy -->
+        <div class="row">
+            <!-- Jméno -->
+            <div class="form-group col-sm-6 pb-2">
+                <label asp-for="FirstName" class="control-label"></label>        <!-- Label -->
+                <input asp-for="FirstName" class="form-control" />               <!-- InputBox -->
+                <span asp-validation-for="FirstName" class="text-danger"></span> <!-- Validace -->
+            </div>
+
+            <!-- Příjmení -->
+            <div class="form-group col-sm-6 pb-2">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <div class="row">
+            <!-- Email -->
+            <div class="form-group col-sm-6 pb-2">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <!-- Telefon -->
+            <div class="form-group col-sm-6 pb-2">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Ulice -->
+            <div class="form-group col-sm-6 pb-2">
+                <label asp-for="Street" class="control-label"></label>
+                <input asp-for="Street" class="form-control" />
+                <!--Nevalidujeme, není povinné -->
+                <!--<span asp-validation-for="Street" class="text-danger"></span>--> 
+            </div>
+
+            <!-- Číslo popisné -->
+            <div class="form-group col-sm-6 pb-2">
+                <label asp-for="HouseNumber" class="control-label"></label>
+                <input asp-for="HouseNumber" class="form-control" />
+                <span asp-validation-for="HouseNumber" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row pb-3">
+            <!-- Město -->
+            <div class="form-group col-sm-6 pb-2">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+
+            <!-- PSČ -->
+            <div class="form-group col-sm-6 pb-2">
+                <label asp-for="PostCode" class="control-label"></label>
+                <input asp-for="PostCode" class="form-control" />
+                <span asp-validation-for="PostCode" class="text-danger"></span>
+            </div>
+        </div>
+
+        <hr class="mt-sm-3" />
+
+        <!-- Flexbox, který umístí dvě tlačítka vedle sebe a zarovná je na střed -->
+        <div class="d-flex justify-content-center flex-wrap">
+
+            <!-- Tlačítko Uložit volá akci PersonsController.Create(person) -->
+            <button type="submit" class="btn btn-primary me-2">Uložit</button>
+
+            <!-- Odkaz volá akci PersonsController.Index() -->
+            <a class="btn btn-primary" asp-action="Index">Zpět na seznam pojištěnců</a>
+
+        </div>
+        
+    </form>
+
+</div>
+
+
+
+
+

@@ -1,0 +1,52 @@
+﻿<!------------------------------------------------------------------------------------------------- 
+- Toto view obsluhuje metodu InsurancesController.Delete
+- Zobrazuje formulář pro zadání nového pojištěnce
+- Nejedná se o kompletní stránku, ale pouze o její část, která se vloží do layoutu.
+- Znak zavináč uvádí C# kód v HTML souboru, takzvaý Razor.
+-------------------------------------------------------------------------------------------------->
+
+<!-- Definuje, že modelem tohoto view je objekt třídy Insurance -->
+@model Insurance_ASP.Models.Insurance
+
+@{
+    ViewData["Title"] = "Odstranit pojištění";  // Upraveno - Nastavení titulku
+}
+
+<!-------------------------------------------------------------------------------------------------
+Obsah vkládané stránky 
+-------------------------------------------------------------------------------------------------->
+
+<div class="center-800">
+
+    <div class="alert alert-danger" role="alert">
+
+        <h4 class="text-center my-5">
+            Opravdu chcete definitivně odstranit pojistnou smlouvu
+            <a asp-action="Details" asp-route-id="@Model?.Id" class="alert-link">
+                SM-@Html.DisplayFor(model => model.Id)</a> 
+            a všechny její pojistné události?
+        </h4>
+
+        <form asp-action="Delete">
+    
+            <!-- Parametry, které jsou needitovatelné a zůstávají beze změny -->
+            <input type="hidden" asp-for="Id" />
+    
+            <!-- Flexbox, který umístí dvě tlačítka vedle sebe a zarovná je na střed -->
+            <div class="d-flex justify-content-center flex-wrap">
+                <input type="submit" value="Odstranit" class="btn btn-danger me-2 mb-2" />
+                <a asp-action="Index" class="btn btn-primary me-2 mb-2">Zpět na seznam pojištění</a>
+            </div>
+    
+        </form>
+    
+    </div>
+
+</div>
+
+
+
+
+
+
+

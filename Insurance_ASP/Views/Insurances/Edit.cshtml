@@ -1,0 +1,96 @@
+﻿<!------------------------------------------------------------------------------------------------- 
+- Toto view obsluhuje metodu InsurancesController.Edit 
+- Zobrazuje formulář pro zadání nového pojištěnce
+- Nejedná se o kompletní stránku, ale pouze o její část, která se vloží do layoutu.
+- Znak zavináč uvádí C# kód v HTML souboru, takzvaý Razor.
+-------------------------------------------------------------------------------------------------->
+
+<!-- Definuje, že modelem tohoto view je objekt třídy Insurance -->
+@model Insurance_ASP.Models.Insurance
+
+@{
+    ViewData["Title"] = "Editovat pojistnou smlouvu";  // Upraveno - Nastavení titulku
+}
+
+<!-------------------------------------------------------------------------------------------------
+Obsah vkládané stránky 
+-------------------------------------------------------------------------------------------------->
+
+<div class="center-800">
+
+    <!-- Hlavní nadpis stránky -->
+    <h1>@ViewData["Title"] SM-@Model.Id</h1>
+    <hr />
+    
+    <!-- Shrnutí pojištěnce -->
+    <dl class="row">
+        <dt class = "col-sm-3">
+            Pojištěnec
+        </dt>
+        <dd class = "col-sm-9">
+            <a asp-controller="Persons" asp-action="Details" asp-route-id="@ViewBag.Person.Id">
+               @ViewBag.Person.FirstName @ViewBag.Person.LastName</a>
+        </dd>
+    </dl>
+    <hr class="mb-sm-4" />
+
+    <!-- Formulář -->
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    
+        <!-- Parametry, které jsou needitovatelné a zůstávají beze změny -->
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="PersonId" />
+    
+        <!-- Typ pojištění jako rozevírací seznam předaný z ViewBagu -->
+        <div class="form-group pb-2">
+            <label asp-for="Type" class="control-label"></label>
+            <select asp-for="Type" class ="form-control" asp-items="Insurance.GetInsuranceTypes()"></select>
+            <span asp-validation-for="Type" class="text-danger"></span>  <!-- JK!!! -->
+        </div>
+    
+        <!-- Jeden řádek formuláře s více elementy -->
+        <div class="row">
+            <div class="form-group col-sm-6 pb-2">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-6 pb-2">
+                <label asp-for="Subject" class="control-label"></label>
+                <input asp-for="Subject" class="form-control" />
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>
+        </div>
+    
+        <!-- Jeden řádek formuláře s více elementy -->
+        <div class="row pb-4">
+            <div class="form-group col-sm-6 pb-2">
+                <label asp-for="ValidFrom" class="control-label"></label>
+                <input asp-for="ValidFrom" class="form-control" />
+                <span asp-validation-for="ValidFrom" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-6 pb-2">
+                <label asp-for="ValidTo" class="control-label"></label>
+                <input asp-for="ValidTo" class="form-control" />
+                <span asp-validation-for="ValidTo" class="text-danger"></span>
+            </div>
+        </div>
+    
+        <hr class="mt-sm-3" />
+
+        <!-- Flexbox, který umístí tlačítka vedle sebe a zarovná je vlevo -->
+        <div class="d-flex justify-content-center flex-wrap">
+    
+            <!-- Tlačítko na odeslání formuláře -->
+            <input type="submit" value="Uložit" class="btn btn-primary me-2" />
+    
+            <!-- Tlačítko na seznam všech exitujících pojištění -->
+            <a asp-action="Index" class="btn btn-primary me-2">Zpět na seznam pojištění</a>
+    
+        </div>
+    
+    </form>
+
+</div>
+

@@ -1,0 +1,84 @@
+﻿<!------------------------------------------------------------------------------------------------- 
+- Toto view obsluhuje metodu IncidentsController.Index  
+- Zobrazuje seznam pojištěnců
+- Nejedná se o kompletní stránku, ale pouze o její část, která se vloží do layoutu.
+- Znak zavináč uvádí C# kód v HTML souboru, takzvaý Razor.
+-------------------------------------------------------------------------------------------------->
+
+<!-- Definuje, že modelem tohoto view je kolekce objektů třídy Incident -->
+@model IEnumerable<Insurance_ASP.Models.Incident>
+
+@{
+    ViewData["Title"] = "Pojistné události";  // Upraveno - Nastavení titulku
+}
+
+<!-------------------------------------------------------------------------------------------------
+Obsah vkládané stránky 
+-------------------------------------------------------------------------------------------------->
+
+<!-- Hlavní nadpis stránky -->
+<h1>@ViewData["Title"]</h1>
+
+<!-- Tabulka s pojistnými událostmi -->
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Událost
+                </th>
+                <th>
+                    Smlouva
+                </th>
+                <th>
+                    Pojištěnec
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) 
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id">
+                           PU-@Html.DisplayFor(modelItem => item.Id)</a>
+                    </td>
+                    <td>
+                        <a asp-controller="Insurances" asp-action="Details" asp-route-id="@item.Insurance.Id">
+                           SM-@item.Insurance.Id</a>
+                    </td>
+                    <td>
+                        <a asp-controller="Persons" asp-action="Details" asp-route-id="@item.Insurance.Person.Id">
+                           @item.Insurance.Person.FirstName @item.Insurance.Person.LastName</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning me-1">Editovat</a> 
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Odstranit</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

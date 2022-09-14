@@ -1,0 +1,59 @@
+﻿<!------------------------------------------------------------------------------------------------- 
+- Toto view obsluhuje metodu AccountController.Login 
+- Zobrazuje formulář pro přihlášení stávajícího uživatele
+- Nejedná se o kompletní stránku, ale pouze o její část, která se vloží do layoutu.
+- Znak zavináč uvádí C# kód v HTML souboru, takzvaý Razor.
+-------------------------------------------------------------------------------------------------->
+
+@using Microsoft.AspNetCore.Identity
+
+<!-- Definuje, že modelem tohoto view je objekt třídy LoginViewModel -->
+@model Insurance_ASP.Models.LoginViewModel
+
+@inject SignInManager<IdentityUser> SignInManager
+
+@{
+    ViewData["Title"] = "Přihlášení";  // Upraveno - Nastavení titulku
+}
+
+<!-------------------------------------------------------------------------------------------------
+Obsah vkládané stránky 
+-------------------------------------------------------------------------------------------------->
+
+<div class="center-500">
+
+    <!-- Hlavní nadpis stránky -->
+    <h1>@ViewData["Title"]</h1>
+
+    <form class="d-flex flex-column gap-4 mb-4" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <!--<div asp-validation-summary="All" class="text-danger"></div>-->
+    
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="checkbox form-check">
+            <label class="form-check-label" asp-for="RememberMe">
+                <input class="form-check-input" asp-for="RememberMe" />
+                @Html.DisplayNameFor(m => m.RememberMe)
+            </label>
+        </div>
+    
+        <div class="form-group mb-4 d-flex gap-3">
+            <button class="btn btn-primary" type="submit">Přihlásit se</button>
+            <a class="btn btn-primary" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Registrovat se</a>
+        </div>
+    </form>
+
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

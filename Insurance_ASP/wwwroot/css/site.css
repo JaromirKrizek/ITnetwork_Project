@@ -1,0 +1,72 @@
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    height: 100%;
+}
+
+/*-------------------------------------------------------------------------------------------------    
+Vlastní stylování
+-------------------------------------------------------------------------------------------------*/ 
+
+th, td 
+{
+    white-space: nowrap;     /* Aby se v tabulkách nezalamoval text */
+    vertical-align: middle;  /* Svislé vycentrování na støed */
+}
+
+/* Pøepisuje bootstrap stylovací tøídu btn (tlaèítka) */
+.btn, 
+.btn:hover
+{
+    color: #fff;  /* Barva textu bude vždy bílá */
+}
+
+/* Selektor pøi najetí myší na všechny odkazy v navigaci */
+nav a:hover 
+{
+    color: darkgrey !important;  /* Nastaví šedou barvu */
+}
+
+/* Moje rozšížené stylování tlaèítka */
+.btn-custom {
+    width: 200px;
+}
+
+/* Moje centrovací tøída s maximální šíøkou 800px */
+.center-800 {
+    margin: 0 auto;
+    max-width: 800px
+}
+
+/* Moje centrovací tøída s maximální šíøkou 500px */
+.center-500 {
+    margin: 0 auto;
+    max-width: 500px
+}
+
+
+
+
+
+
+
+
+
+
+
+
