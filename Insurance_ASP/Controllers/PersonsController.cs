@@ -44,11 +44,17 @@ namespace Insurance_ASP.Controllers
                 return NotFound();
             }
 
-            var person = await _context.Person
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var person = await _context.Person.FirstOrDefaultAsync(m => m.Id == id);
             if (person == null)
             {
                 return NotFound();
+            }
+
+            // Pokud je přihlášen běžný uživatel a jeho email se neshoduje s emailem aktuálně
+            // volaného uživatele, přesměruje se na výchozí stránku. (Přidáno JK???)
+            if (!User.IsInRole("Admin") && User.Identity.Name != person.Email)
+            {
+                return RedirectToAction("Index", "Persons");
             }
 
             // Uloží si PersonId do TempData pro pozdější použití v

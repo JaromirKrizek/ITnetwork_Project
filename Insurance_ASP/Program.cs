@@ -202,7 +202,20 @@ Insurance_ASP - Závìreèný projekt
    - Dorùzných pohledù pøidána podmínka @if (User.IsInRole("Admin")), která zobrazuje nìkterá
      editaèní tlaèítka pouze administrátorovi (Základy lekce 15)
 
+   - Zaøídit, aby pokud je nìkdo pøihlášen jako bìžný uživatel (nikoliv administrátor) vidìl
+     pouze své údaje o pojištìnci, pojištìní a pojistných událostech.
   
+      - Ve view Person/Index.cshtml, Insurances/Index.cshtml, Incidents/Index.cshtml je v cyklu
+        tvoøícím øádky tabulky pøidána filtrující podmínka porovnávající email pøihlášeného
+        uživatele a email pojštìnce z db tabulky Person.
+        
+      - V akcích PersonsController.Details, InsurancesController.Details, 
+        IncidentsController.Details pøidána podobná omezující podmínka jako ve views (bod výše).
+
+   - Zaøídit, aby se pøi registraci nového uživatele zároveò vytvoøil i nový jemu odpovídající
+     pojištìnec se shodným emailem
+
+
 
 ---------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------

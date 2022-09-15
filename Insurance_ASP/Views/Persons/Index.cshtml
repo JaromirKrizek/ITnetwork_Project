@@ -10,6 +10,7 @@
 
 @{
     ViewData["Title"] = "Pojištěnci";  // Upraveno - Nastavení titulku
+    string loggedUserEmail = User.Identity.Name;
 }
 
 <!-------------------------------------------------------------------------------------------------
@@ -41,27 +42,31 @@ Obsah vkládané stránky
         <tbody>
             @foreach (var person in Model) 
             {
-                <tr>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@person.Id">@person.FirstName @person.LastName</a>
-                    </td>
-                    <td>
-                        @person.Street @person.HouseNumber, @person.PostCode @person.City
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => person.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => person.Phone)
-                    </td>
-                    <td>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <a asp-action="Edit" asp-route-id="@person.Id" class="btn btn-warning me-1">Editovat</a>
-                            <a asp-action="Delete" asp-route-id="@person.Id" class="btn btn-danger">Odstranit</a>
-                        }
-                    </td>
-                </tr>
+                <!-- Zajišťuje, že přihlášený ne-admin uživatel vidí pouze svého pojištěnce -->
+                @if (User.IsInRole("Admin") || loggedUserEmail == person.Email)
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@person.Id">@person.FirstName @person.LastName</a>
+                        </td>
+                        <td>
+                            @person.Street @person.HouseNumber, @person.PostCode @person.City
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => person.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => person.Phone)
+                        </td>
+                        <td>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-action="Edit" asp-route-id="@person.Id" class="btn btn-warning me-1">Editovat</a>
+                                <a asp-action="Delete" asp-route-id="@person.Id" class="btn btn-danger">Odstranit</a>
+                            }
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>

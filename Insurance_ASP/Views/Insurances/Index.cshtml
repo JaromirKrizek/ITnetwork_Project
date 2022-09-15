@@ -10,6 +10,7 @@
 
 @{
     ViewData["Title"] = "Pojištění";  // Upraveno - Nastavení titulku
+    string loggedUserEmail = User.Identity.Name;
 }
 
 <!-------------------------------------------------------------------------------------------------
@@ -51,37 +52,41 @@ Obsah vkládané stránky
         <tbody>
             @foreach (var item in Model) 
             {
-                <tr>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@item.Id">SM-@Html.DisplayFor(modelItem => item.Id)</a>
-                    </td>
-                    <td>
-                        <a asp-controller="Persons" asp-action="Details" asp-route-id="@item.Person.Id">
-                           @item.Person.FirstName @item.Person.LastName</a>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Subject)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Amount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ValidFrom)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ValidTo)
-                    </td>
-                    <td>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning me-1">Editovat</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Odstranit</a>
-                        }
-                    </td>
-                </tr>
+                <!-- Zajišťuje, že přihlášený ne-admin uživatel vidí pouze svá pojištění -->
+                @if (User.IsInRole("Admin") || loggedUserEmail == item.Person.Email)
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id">SM-@Html.DisplayFor(modelItem => item.Id)</a>
+                        </td>
+                        <td>
+                            <a asp-controller="Persons" asp-action="Details" asp-route-id="@item.Person.Id">
+                                @item.Person.FirstName @item.Person.LastName</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Subject)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ValidFrom)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ValidTo)
+                        </td>
+                        <td>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning me-1">Editovat</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Odstranit</a>
+                            }
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>

@@ -50,13 +50,15 @@ namespace Insurance_ASP.Controllers
                 return NotFound();
             }
 
-            // Nutno zjistit pojištěnce tohoto pojištění pro potřeby view (Přidáno JK???)
-            var person = await _context.Person.FindAsync(insurance.PersonId);
-            if (person == null)
+            // Pokud je přihlášen běžný uživatel a jeho email se neshoduje s emailem aktuálně
+            // volaného uživatele, přesměruje se na výchozí stránku. (Přidáno JK???)
+            if (!User.IsInRole("Admin") && User.Identity.Name != insurance.Person.Email)
             {
-                return NotFound();
+                return RedirectToAction("Index", "Insurances");
             }
-            ViewBag.Person = person;
+
+            // Nutno zjistit pojištěnce tohoto pojištění pro potřeby view (Přidáno JK???)
+            ViewBag.Person = insurance.Person;
 
             // Uloží si InsuranceId do TempData pro pozdější použití v
             // [HttpPost]IcidentsController.Create při tvorbě události (Přidáno JK???)

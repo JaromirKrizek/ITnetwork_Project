@@ -50,6 +50,13 @@ namespace Insurance_ASP.Controllers
                 return NotFound();
             }
 
+            // Pokud je přihlášen běžný uživatel a jeho email se neshoduje s emailem aktuálně
+            // volaného uživatele, přesměruje se na výchozí stránku. (Přidáno JK???)
+            if (!User.IsInRole("Admin") && User.Identity.Name != incident.Insurance.Person.Email)
+            {
+                return RedirectToAction("Index", "Incidents");
+            }
+
             // Nutno zjistit pojištěnce a pojištění této události pro potřeby view (Přidáno JK???)
             ViewBag.Insurance = incident.Insurance;
             ViewBag.Person = incident.Insurance.Person;
