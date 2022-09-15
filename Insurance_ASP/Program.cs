@@ -215,7 +215,10 @@ Insurance_ASP - Závìreèný projekt
    - Zaøídit, aby se pøi registraci nového uživatele zároveò vytvoøil i nový jemu odpovídající
      pojištìnec se shodným emailem
 
-
+      - Upraveno view Account/Register.cshtml, kam se pøidaly všechny vstupy nutné pro vytvoøení
+        pojištìnce (tøída Person)
+      - Upravena akce AccountController.Register, kde se kromì registrace uživatele vytvoøí
+        jemu odpovídající pojištìnec (tøída Person) a vloží se do databáze.
 
 ---------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------

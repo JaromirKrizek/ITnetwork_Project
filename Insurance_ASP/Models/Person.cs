@@ -22,6 +22,7 @@ namespace Insurance_ASP.Models
 
         [Required(ErrorMessage = "Vyplňte email")]
         [EmailAddress(ErrorMessage = "Neplatná emailová adresa")]   // Validace na serveru
+        [DataType(DataType.EmailAddress)]                           // Validace na serveru
         [Display(Name = "Email")]
         public string Email { get; set; }
 

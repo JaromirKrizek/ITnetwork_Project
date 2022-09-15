@@ -16,32 +16,98 @@
 Obsah vkládané stránky 
 -------------------------------------------------------------------------------------------------->
 
-<div class="center-500">
+<div class="center-800">
 
     <!-- Hlavní nadpis stránky -->
     <h1>@ViewData["Title"]</h1>
+    <hr class="mb-sm-4" />
     
-    <form class="d-flex flex-column gap-4 mb-4" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+    <form class="d-flex flex-column" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <!--<div asp-validation-summary="All" class="text-danger"></div>-->
     
-        <div class="form-group">
-            <label asp-for="Email"></label>
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+        <!-- Jeden řádek formuláře s více elementy -->
+        <div class="row">
+            <!-- Jméno -->
+            <div class="form-group col-sm-6 mb-2">
+                <label asp-for="FirstName" class="control-label"></label>        <!-- Label -->
+                <input asp-for="FirstName" class="form-control" />               <!-- InputBox -->
+                <span asp-validation-for="FirstName" class="text-danger"></span> <!-- Validace -->
+            </div>
+
+            <!-- Příjmení -->
+            <div class="form-group col-sm-6 mb-2">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
         </div>
-        <div class="form-group">
-            <label asp-for="Password"></label>
-            <input asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
+
+        <div class="row">
+            <!-- Email -->
+            <div class="form-group col-sm-6 mb-2">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <!-- Telefon -->
+            <div class="form-group col-sm-6 mb-2">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
         </div>
-        <div class="form-group">
-            <label asp-for="ConfirmPassword"></label>
-            <input asp-for="ConfirmPassword" class="form-control" />
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+        <div class="row">
+            <!-- Ulice -->
+            <div class="form-group col-sm-6 mb-2">
+                <label asp-for="Street" class="control-label"></label>
+                <input asp-for="Street" class="form-control" />
+                <!--Nevalidujeme, není povinné -->
+                <!--<span asp-validation-for="Street" class="text-danger"></span>--> 
+            </div>
+
+            <!-- Číslo popisné -->
+            <div class="form-group col-sm-6 mb-2">
+                <label asp-for="HouseNumber" class="control-label"></label>
+                <input asp-for="HouseNumber" class="form-control" />
+                <span asp-validation-for="HouseNumber" class="text-danger"></span>
+            </div>
         </div>
+
+        <div class="row">
+            <!-- Město -->
+            <div class="form-group col-sm-6 mb-2">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+
+            <!-- PSČ -->
+            <div class="form-group col-sm-6 mb-2">
+                <label asp-for="PostCode" class="control-label"></label>
+                <input asp-for="PostCode" class="form-control" />
+                <span asp-validation-for="PostCode" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row pb-3">
+            <div class="form-group col-sm-6 mb-2">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-6 mb-2">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+        </div>
+
+        <hr class="mt-sm-3" />
     
-        <button type="submit" class="btn btn-primary align-self-start">Registrace</button>
+        <button type="submit" class="btn btn-primary align-self-center">Registrace</button>
     </form>
 
 </div>

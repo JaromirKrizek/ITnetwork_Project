@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;       // UserManager, SignInManager
 using Insurance_ASP.Models;                // LoginViewModel
+using Insurance_ASP.Data;                  // ApplicationDbContext
 
 namespace Insurance_ASP.Controllers
 {
@@ -20,6 +21,7 @@ namespace Insurance_ASP.Controllers
         // Ćlenské proměnné nutné pro účely přihlašování
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ApplicationDbContext _context;
 
         //-----------------------------------------------------------------------------------------
         // Konstruktor - Instance služeb nám budou do parametrů konstruktoru předány zcela automaticky,
@@ -30,10 +32,12 @@ namespace Insurance_ASP.Controllers
         // při vytvoření projektu.
         //-----------------------------------------------------------------------------------------
         public AccountController(UserManager<IdentityUser> userManager,
-                                 SignInManager<IdentityUser> signInManager)
+                                 SignInManager<IdentityUser> signInManager,
+                                 ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         //-----------------------------------------------------------------------------------------
@@ -96,7 +100,8 @@ namespace Insurance_ASP.Controllers
                     // Uživatele tvoříme jako novou instanci třídy IdentityUser.
                     var user = new IdentityUser { UserName = model.Email, Email = model.Email };
 
-                    // Vytvoříme nového uživatele pomocí metody CreateAsync() na instanci třídy UserManager.
+                    // Vytvoříme nového uživatele pomocí metody CreateAsync() na instanci
+                    // třídy UserManager.
                     // Přitom se zkontroluje platnost hesla a pokud proběhne v pořádku,
                     // vloží uživatele do databáze (tabulka dbo.AspNetUsers):
                     var result = await _userManager.CreateAsync(user, model.Password);
@@ -104,6 +109,22 @@ namespace Insurance_ASP.Controllers
                     // Pokud vytvoření uživatele proběhlo v pořádku
                     if (result.Succeeded)
                     {
+                        // Vytvoří nového pojištěnce
+                        var person = new Person { Id = 0,
+                                                  FirstName = model.FirstName,
+                                                  LastName = model.LastName,
+                                                  Email = model.Email,
+                                                  Phone = model.Phone,
+                                                  Street = model.Street,
+                                                  HouseNumber = model.HouseNumber,
+                                                  City = model.City,
+                                                  PostCode = model.PostCode,
+                                                  Insurances = null };
+
+                        // Do databázové tabulky dbo.Person vloží nového pojištěnce.
+                        _context.Add(person);
+                        await _context.SaveChangesAsync();
+
                         // Tato metoda uživatele rovnou i přihlásí.
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToLocal(returnUrl);
@@ -111,7 +132,8 @@ namespace Insurance_ASP.Controllers
 
                     foreach (var error in result.Errors)
                     {
-                        // Do view přidá varovné hlášky informující o tom, že ověření hesla neproběhlo úspěšně:
+                        // Do view přidá varovné hlášky informující o tom,
+                        // že ověření hesla neproběhlo úspěšně:
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
                 }
