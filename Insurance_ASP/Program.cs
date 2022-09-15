@@ -199,7 +199,7 @@ Insurance_ASP - Závìreèný projekt
      pøidány atributy [Authorize] a [Authorize(Roles = "Admin")], které zpøístupòují controllery
      a jednotlivé akce buï administrátorovi nebo pøihlášeným uživatelùm (Základy lekce 15)
 
-   - Dorùzných pohledù pøidána podmínka @if (User.IsInRole("Admin")), která zobrazuje nìkterá
+   - Dor ùzných pohledù pøidána podmínka @if (User.IsInRole("Admin")), která zobrazuje nìkterá
      editaèní tlaèítka pouze administrátorovi (Základy lekce 15)
 
    - Zaøídit, aby pokud je nìkdo pøihlášen jako bìžný uživatel (nikoliv administrátor) vidìl
@@ -217,8 +217,21 @@ Insurance_ASP - Závìreèný projekt
 
       - Upraveno view Account/Register.cshtml, kam se pøidaly všechny vstupy nutné pro vytvoøení
         pojištìnce (tøída Person)
+
       - Upravena akce AccountController.Register, kde se kromì registrace uživatele vytvoøí
         jemu odpovídající pojištìnec (tøída Person) a vloží se do databáze.
+
+   - Zaøídit, aby se pøi vytvožení nového pojištìnce (Preson) zároveò zaregistroval nový uživatel
+     se shodným emailem
+
+      - Upraveno view Person/Create.cshtml, kam se pøidaly všechny vstupy nutné pro vytvoøení
+        uživatele, tj heslo.
+
+      - Upravena akce PersonsController/Create, kde se kromì pojištìnce vytvoøí jemu odpovídající
+        uživatel se stejným emailem.
+
+      - Provedení migrace databáze - postup viz výše.
+
 
 ---------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------

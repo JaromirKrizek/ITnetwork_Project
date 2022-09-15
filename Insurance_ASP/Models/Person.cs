@@ -52,5 +52,22 @@ namespace Insurance_ASP.Models
         // Díky slovu virtual tato vlastnost v db tabulce nebude.
         public virtual ICollection<Insurance> Insurances { get; set; }
 
+        //----------------------------------------------------------------------------
+        // Další nedatabázové (virtual) vlastnosti, které slouží k vytvožení uživatele
+        //----------------------------------------------------------------------------
+        [NotMapped]  // Tato vlastnost nebude v databázové tabulce
+        [Required(ErrorMessage = "Zadejte heslo")]
+        [StringLength(100, ErrorMessage = "Heslo musí být alespoň 8 znaků dlouhé", MinimumLength = 8)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Heslo")]
+        public string Password { get; set; }
+
+        [NotMapped]
+        [Required(ErrorMessage = "Zadejte heslo")]
+        [Compare("Password", ErrorMessage = "Zadaná hesla se neshodují")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Potvrzení hesla")]
+        public string ConfirmPassword { get; set; }
+
     }
 }

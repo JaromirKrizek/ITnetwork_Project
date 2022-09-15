@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Insurance_ASP.Data;
 using Insurance_ASP.Models;
 using Microsoft.AspNetCore.Authorization;  // [Authorize]
+using Microsoft.AspNetCore.Identity;       // UserManager
 
 namespace Insurance_ASP.Controllers
 {
@@ -16,11 +17,14 @@ namespace Insurance_ASP.Controllers
     public class PersonsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
         //-----------------------------------------------------------------------------------------
-        public PersonsController(ApplicationDbContext context)
+        public PersonsController(ApplicationDbContext context,
+                                 UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         //-----------------------------------------------------------------------------------------
@@ -82,18 +86,48 @@ namespace Insurance_ASP.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]  // K této akci má přístup pouze admin
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,Phone,Street,HouseNumber,City,PostCode")] Person person)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,Phone,Street,HouseNumber,City,PostCode,Password,ConfirmPassword")] Person person)
         {
             // IsValid ověří, zda je Person platný. Přitom bere v úvahu i validace nastavené
             // v modelové třídě Article.
             if (ModelState.IsValid)
             {
-                // Do databázové tabulky dbo.Person vloží nový záznam.
-                _context.Add(person);
-                await _context.SaveChangesAsync();
+                // Pokud nový uživatel ještě není zaregistrovaný
+                if (await _userManager.FindByEmailAsync(person.Email) is null)
+                {
+                    // Uživatele tvoříme jako novou instanci třídy IdentityUser.
+                    var user = new IdentityUser { UserName = person.Email, Email = person.Email };
 
-                // Zavolá akci PersonsController.Index() - Návrat na výpis všech pojištěnců
-                return RedirectToAction(nameof(Index));
+                    // Vytvoříme nového uživatele pomocí metody CreateAsync() na instanci
+                    // třídy UserManager.
+                    // Přitom se zkontroluje platnost hesla a pokud proběhne v pořádku,
+                    // vloží uživatele do databáze (tabulka dbo.AspNetUsers):
+                    var result = await _userManager.CreateAsync(user, person.Password);
+
+                    // Pokud vytvoření uživatele proběhlo v pořádku
+                    if (result.Succeeded)
+                    {
+                        // Do databázové tabulky dbo.Person vloží nový záznam.
+                        _context.Add(person);
+                        await _context.SaveChangesAsync();
+
+                        // Zavolá akci PersonsController.Index() - Návrat na výpis všech pojištěnců
+                        return RedirectToAction(nameof(Index));
+                    }
+
+                    foreach (var error in result.Errors)
+                    {
+                        // Do view přidá varovné hlášky informující o tom,
+                        // že ověření hesla neproběhlo úspěšně:
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+                else
+                {
+                    AddErrors(IdentityResult.Failed(new IdentityError()
+                        { Description = $"Email {person.Email} je již zaregistrován" }));
+                }
+
             }
             return View(person);
         }
@@ -209,5 +243,18 @@ namespace Insurance_ASP.Controllers
         {
             return (_context.Person?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        //-----------------------------------------------------------------------------------------
+        // Pomocná metoda pro odeslání chyb, zjištěných při validaci, zpátky do View
+        // Eshop lekce 10
+        //-----------------------------------------------------------------------------------------
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+                ModelState.AddModelError(string.Empty, error.Description);
+        }
+
+        //-----------------------------------------------------------------------------------------
+
     }
 }
