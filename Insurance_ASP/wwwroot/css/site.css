@@ -36,15 +36,15 @@ th, td
     color: #fff;  /* Barva textu bude vždy bílá */
 }
 
+/* Moje rozšížené stylování tlaèítka */
+.btn-custom {
+    width: 200px;
+}
+
 /* Selektor pøi najetí myší na všechny odkazy v navigaci */
 nav a:hover 
 {
     color: darkgrey !important;  /* Nastaví šedou barvu */
-}
-
-/* Moje rozšížené stylování tlaèítka */
-.btn-custom {
-    width: 200px;
 }
 
 /* Moje centrovací tøída s maximální šíøkou 800px */

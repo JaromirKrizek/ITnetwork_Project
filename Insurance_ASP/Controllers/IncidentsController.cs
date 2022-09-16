@@ -26,10 +26,15 @@ namespace Insurance_ASP.Controllers
         //-----------------------------------------------------------------------------------------
         // GET: Incidents
         //-----------------------------------------------------------------------------------------
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)  // pageNumber přidáno pro paginaci
         {
-            var applicationDbContext = _context.Incident.Include(i => i.Insurance);
-            return View(await applicationDbContext.ToListAsync());
+            var query = _context.Incident.Include(i => i.Insurance);
+            var model = await PaginatedList<Incident>.CreateAsync(query, pageNumber ?? 1, pageSize: 10);
+            return View(model);
+
+            // Původní provedení před zavedením paginace
+            // var applicationDbContext = _context.Incident.Include(i => i.Insurance);
+            // return View(await applicationDbContext.ToListAsync());
         }
 
         //-----------------------------------------------------------------------------------------

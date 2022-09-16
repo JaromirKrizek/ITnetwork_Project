@@ -31,11 +31,25 @@ namespace Insurance_ASP.Controllers
         // GET: Persons
         // Výpis všech pojištěnců
         //-----------------------------------------------------------------------------------------
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)  // pageNumber přidáno pro paginaci 
         {
-            return _context.Person != null ?
-                        View(await _context.Person.ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.Person'  is null.");
+            var query = _context.Person;
+            if (query != null)
+            {
+                // PaginatedList zaveden kvůli paginaci ve view
+                var model = await PaginatedList<Person>.CreateAsync(query, pageNumber ?? 1, pageSize: 10);
+                return View(model);
+            }
+            else
+            {
+                return Problem("Entity set 'ApplicationDbContext.Person'  is null.");
+            }
+
+            // Původní provedení před zavedením paginace
+            // Původní provedení před zavedením paginace
+            // return _context.Person != null ?
+            //             View(await _context.Person.ToListAsync()) :
+            //             Problem("Entity set 'ApplicationDbContext.Person'  is null.");
         }
 
         //-----------------------------------------------------------------------------------------

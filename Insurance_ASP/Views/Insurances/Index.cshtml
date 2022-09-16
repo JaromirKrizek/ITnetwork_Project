@@ -6,7 +6,9 @@
 -------------------------------------------------------------------------------------------------->
 
 <!-- Definuje, že modelem tohoto view je kolekce objektů třídy Insurance -->
-@model IEnumerable<Insurance_ASP.Models.Insurance>
+<!-- PaginatedList je použit pro účely paginace -->
+@*model IEnumerable<Insurance_ASP.Models.Insurance>*@
+@model PaginatedList<Insurance_ASP.Models.Insurance>
 
 @{
     ViewData["Title"] = "Pojištění";  // Upraveno - Nastavení titulku
@@ -25,27 +27,13 @@ Obsah vkládané stránky
     <table class="table">
         <thead>
             <tr>
-                <th>
-                    Smlouva
-                </th>
-                <th>
-                    Pojištěnec
-                </th>
-                <th>
-                    Typ pojištění
-                </th>
-                <th>
-                    Předmět
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Amount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ValidFrom)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ValidTo)
-                </th>
+                <th>Smlouva</th>
+                <th>Pojištěnec</th>
+                <th>Typ pojištění</th>
+                <th>Předmět</th>
+                <th>Pojistná částka</th>
+                <th>Platnost od</th>
+                <th>Platnost do</th>
                 <th></th>
             </tr>
         </thead>
@@ -90,4 +78,25 @@ Obsah vkládané stránky
             }
         </tbody>
     </table>
+</div>
+
+<!-- Paginace -->
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+} 
+
+<!-- Flexbox, který umístí dvě paginační tlačítka vedle sebe a zarovná je na střed -->
+<div class="d-flex justify-content-center flex-wrap">
+
+    <!-- Tlačítko Předchozí -->
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)"
+        class="btn btn-primary me-2 @prevDisabled">Předchozí
+    </a>
+
+    <!-- Tlačítko Další -->
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)"
+       class="btn btn-primary @nextDisabled">Další
+    </a>
+
 </div>

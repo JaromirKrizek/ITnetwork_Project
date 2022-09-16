@@ -232,8 +232,23 @@ Insurance_ASP - Závìreèný projekt
 
       - Provedení migrace databáze - postup viz výše.
 
+  ---------------------------------------------
+- Paginace
+  ---------------------------------------------
 
----------------------------------------------------------------------------------------------------
+   - Paginace je zapracovaná podle tohoto vzoru: 
+     https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/sort-filter-page?view=aspnetcore-6.0
+
+   - Pøidán soubor PaginatedList s tøídou PaginatedList
+
+   - V controllerech PersonsController, InsurancesController, IncidentsController upravena akce
+     Index, do které je pøidán parametr pageNumber a použit model PaginatedList
+
+   - Upravena view Person/Index, Insurances/Index, Incidents/Index:
+      - Jako model je místo IEnumerable použit PaginatedList
+      - Je doplnìna sekce s Paginací (stanovení promìnných prevDisabled, nextDisabled) a tlaèítka
+        Pøedchozí a Další
+
 ---------------------------------------------------------------------------------------------------
 Dotazy:
 
@@ -255,7 +270,6 @@ Dotazy:
 
 
 #################################################################################################*/
-
 
 using Insurance_ASP.Data;
 using Insurance_ASP.Extensions;        // RegisterAdmin
@@ -306,7 +320,7 @@ namespace Insurance_ASP
             builder.Services.AddControllersWithViews();
 
             // Pøidáno v souvislosti s nastavením identity (E-shop v ASP.NET Lekce 4)
-            builder.Services.AddRazorPages();  
+            builder.Services.AddRazorPages();
 
             var app = builder.Build();
 
