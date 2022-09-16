@@ -281,6 +281,7 @@ using Insurance_ASP.Data;
 using Insurance_ASP.Extensions;        // RegisterAdmin
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Insurance_ASP.Models;           // SeedData.Initialize(services)
 
 namespace Insurance_ASP
 {
