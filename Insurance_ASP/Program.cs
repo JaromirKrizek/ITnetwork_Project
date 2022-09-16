@@ -249,9 +249,9 @@ Insurance_ASP - Závìreènı projekt
       - Je doplnìna sekce s Paginací (stanovení promìnnıch prevDisabled, nextDisabled) a tlaèítka
         Pøedchozí a Další
 
-  -------------------------------------------
+  --------------------------------------------
 - Naplnìní prázdné databáze testovacími daty
-  -------------------------------------------
+  --------------------------------------------
    - Zajišuje to funkce SeedEmptyDatabase
    - Inspirováno funkcí RegisterAdmin
 
