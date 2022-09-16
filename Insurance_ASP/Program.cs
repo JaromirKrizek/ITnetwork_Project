@@ -249,6 +249,12 @@ Insurance_ASP - Závìreènı projekt
       - Je doplnìna sekce s Paginací (stanovení promìnnıch prevDisabled, nextDisabled) a tlaèítka
         Pøedchozí a Další
 
+  ------------------------------------------
+- Naplnìní prázdné databáze testovacími daty
+  ------------------------------------------
+   - Zajišuje to funkce SeedEmptyDatabase
+   - Inspirováno funkcí RegisterAdmin
+
 ---------------------------------------------------------------------------------------------------
 Dotazy:
 
@@ -324,6 +330,15 @@ namespace Insurance_ASP
 
             var app = builder.Build();
 
+            // Poèáteèní inicializace databáze:
+            // https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/working-with-sql?view=aspnetcore-6.0&tabs=visual-studio
+            
+            // using (var scope = app.Services.CreateScope())
+            // {
+            //     var services = scope.ServiceProvider;
+            //     SeedData.Initialize(services);
+            // }
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -350,7 +365,10 @@ namespace Insurance_ASP
             app.MapRazorPages();
 
             // Pøidáno kvùli registraci úètu administrátora (E-shop v ASP.NET Lekce 9)
-            await app.RegisterAdmin("admin@email.cz", "Admin123");  
+            await app.RegisterAdmin("admin@email.cz", "Admin123");
+
+            // Pokud je databáze prázdná, naplní ji poèáteèními daty.
+            await app.SeedEmptyDatabase();
 
             app.Run();
         }
