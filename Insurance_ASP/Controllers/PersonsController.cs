@@ -165,6 +165,11 @@ namespace Insurance_ASP.Controllers
             {
                 return NotFound();
             }
+
+            // Uloží si původní Email pojištěnce do TempData pro pozdější použití v
+            // [HttpPost]PersonsController.Edit pro případnou úpravu v IdentityUser (Přidáno JK???)
+            TempData["OriginalEmail"] = person.Email;
+
             return View(person);
         }
 
@@ -176,7 +181,7 @@ namespace Insurance_ASP.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]  // K této akci má přístup pouze admin
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email,Phone,Street,HouseNumber,City,PostCode")] Person person)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email,Phone,Street,HouseNumber,City,PostCode,Password,ConfirmPassword")] Person person)
         {
             if (id != person.Id)
             {
@@ -190,6 +195,28 @@ namespace Insurance_ASP.Controllers
                     // Updatuje záznam v databázové tabulce dbo.Person:
                     _context.Update(person);
                     await _context.SaveChangesAsync();
+
+                    // Pokud se u pojištěnce změnil email, změníme i email odpovídajicímu uživateli.
+                    // Z TempData získá originalEmail, který byl uložen v [Get]PersonsController.Edit
+                    // ještě před jeho případnou změnou. (Přidáno JK)
+                    if (TempData.ContainsKey("OriginalEmail"))
+                    {
+                        string originalEmail = TempData["OriginalEmail"].ToString();
+
+                        // Způsobí, aby hodnota v TempData zůstala i po zavolání dalších akcí.
+                        TempData.Keep();
+
+                        if (originalEmail != person.Email)
+                        {
+                            IdentityUser user = await _userManager.FindByEmailAsync(originalEmail);
+                            if (user != null)
+                            {
+                                user.UserName = person.Email;
+                                user.Email = person.Email;
+                                await _userManager.UpdateAsync(user);  // Persist
+                            }
+                        }
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -244,6 +271,14 @@ namespace Insurance_ASP.Controllers
             var person = await _context.Person.FindAsync(id);
             if (person != null)
             {
+                // Podle emailu pojištěnce nalezne odpovídajícího uživatele,
+                // kterého smaže z tabulky dbo.AspNetUsers
+                IdentityUser user = await _userManager.FindByEmailAsync(person.Email);
+                if (user != null)
+                {
+                    IdentityResult result = await _userManager.DeleteAsync(user);
+                }
+
                 // Odstraní záznam z databázové tabulky dbo.Person
                 _context.Person.Remove(person);
             }

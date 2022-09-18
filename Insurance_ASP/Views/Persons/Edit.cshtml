@@ -95,6 +95,12 @@ Obsah vkládané stránky
             </div>
         </div>
 
+        <!-- Parametry, které jsou needitovatelné a zůstávají beze změny -->
+        <!-- Heslo zde ve skutečnosti neměníme ponecháváme ho stejné. Zde je pouze formálně 
+             nastavena defaultní hodnota, aby byl model při návratu do controlleru platný. -->
+        <input type="hidden" asp-for="Password" value="DefaultPassword0" />
+        <input type="hidden" asp-for="ConfirmPassword" value="DefaultPassword0" />
+
         <hr class="mt-sm-3" />
 
         <!-- Flexbox, který umístí dvě tlačítka vedle sebe a zarovná je na střed -->

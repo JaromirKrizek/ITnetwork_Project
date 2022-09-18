@@ -255,6 +255,21 @@ Insurance_ASP - Závìreènı projekt
    - Zajišuje to funkce SeedEmptyDatabase
    - Inspirováno funkcí RegisterAdmin
 
+  ------------------------------------------------------------------
+- Zajistit, aby se pøi smazání pojištìnce smazal i odpovídající user
+  ------------------------------------------------------------------
+   - https://www.yogihosting.com/aspnet-core-identity-create-read-update-delete-users/
+   - Úprava v akci PersonsController.DeleteConfirmed
+
+  --------------------------------------------------------------------
+- Zajistit, aby se pøi editaci pojištìnce a pøípadné zmìnì jeho emailu  
+  zmìnil email a username odpovídajícího usera
+  --------------------------------------------------------------------
+   - https://www.yogihosting.com/aspnet-core-identity-create-read-update-delete-users/
+   - Úprava v [Get] a [HttpPost] akci PersonsController.Edit
+   - Úprava ve view Persons/Edit.cshtml
+      - Nastaveny defaultní hodnoty Password a ConfirmPassword, viz komantáø tam.
+
 ---------------------------------------------------------------------------------------------------
 Dotazy:
 

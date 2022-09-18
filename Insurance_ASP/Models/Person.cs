@@ -60,14 +60,14 @@ namespace Insurance_ASP.Models
         [StringLength(100, ErrorMessage = "Heslo musí být alespoň 8 znaků dlouhé", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Heslo")]
-        public string Password { get; set; }
+        public virtual string Password { get; set; }
 
         [NotMapped]
         [Required(ErrorMessage = "Zadejte heslo")]
         [Compare("Password", ErrorMessage = "Zadaná hesla se neshodují")]
         [DataType(DataType.Password)]
         [Display(Name = "Potvrzení hesla")]
-        public string ConfirmPassword { get; set; }
+        public virtual string ConfirmPassword { get; set; }
 
     }
 }
