@@ -270,8 +270,47 @@ Insurance_ASP - Závìreèný projekt
    - Úprava ve view Persons/Edit.cshtml
       - Nastaveny defaultní hodnoty Password a ConfirmPassword, viz komantáø tam.
 
+###################################################################################################
+Zprovoznìní projektu
+###################################################################################################
+
+Klonování repozitáøe z GitHubu
+
+ - Napøíklad pomocí TCMD si vytvoøíme nìjaký adresáø, do kterého chceme repozitáø naklonovat.
+
+ - Jdeme do toho adresáøe -> pravým -> Git Bash here -> 
+   git clone https://github.com/JaromirKrizek/ITnetwork_Project.git 
+
+ - Obsah repozitáøe z githubu se tam nakopíruje.
+
 ---------------------------------------------------------------------------------------------------
+Migrace databáze po naklonování repozitáøe
+
+ - Roleta Tools -> NuGet Package Manager -> Package Manager Console -> Do konzole napsat:
+   Add-Migration Update_Database_XX
+   Update-Database
+ 
+ - Databáze je pak umístìna v adresáøi C:\Users\Admin\ jako soubor .mdf
+
+---------------------------------------------------------------------------------------------------
+Pøípadné smazání databáze
+
+ - Roleta View -> SQL Server Object Explorer -> SQL Server -> LocalDB -> Databases ->
+   -> pravým na název databáze 
+   -> Delete -> zaškrtnout delete backup ... 
+                zaškrtnout close existing connections.
+
+---------------------------------------------------------------------------------------------------
+Pøihlášení jako admin:
+admin@email.cz  
+Admin123
+
+Pøihlášení jako další uživatelé:
+Viz Extensions\WebApplicationExtensions.SeedEmptyDatabase
+
+###################################################################################################
 Dotazy:
+###################################################################################################
 
  - Je správné øešení ukládání PersonId do TempData v PersonsController.Details a jeho opìtovné
    použití v [HttpPost]InsurancesController.Create JK???
