@@ -329,6 +329,17 @@ Dotazy:
    https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application
 
 
+ - Konzultace støeda 21.9.2022
+
+    - Pokud bych chtìl použít nìjaký enum:
+      promìnná = Enum.GetValues(typeof(MyEnumType));
+
+    - Pokud bych chtìl využít jedno view na dvì akce, 
+      napøíklad Persons\Create.cshtml a Account\Register.cshtml jsou stejné, 
+      mùžu napøíklad v AccountController.Register místo return View(); zavolat
+      return RedirectToAction("Create", "Person");
+      Akci lze také pøidat nìjaký parametr podle toho odkud bylo view voláno.
+
 #################################################################################################*/
 
 using Insurance_ASP.Data;
