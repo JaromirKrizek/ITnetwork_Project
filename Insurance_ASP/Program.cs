@@ -306,6 +306,11 @@ admin@email.cz
 Admin123
 
 Pøihlášení jako další uživatelé:
+jan.novak@email.cz, Jan.novak0
+petr.benda@email.cz, Petr.benda0
+frantisek.fiala@email.cz, Frantisek.fiala0
+kvetoslav.zapadak@email.cz, Kvetoslav.zapadak0
+
 Viz Extensions\WebApplicationExtensions.SeedEmptyDatabase
 
 ###################################################################################################
