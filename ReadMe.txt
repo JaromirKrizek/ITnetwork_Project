@@ -21,14 +21,15 @@ You can try and test the application in the following steps:
       PM> Add-Migration Migrate_Database
       PM> Update-Database
 
-4. Press F5 to launch the application.
+4. In Visual Studio press F5 to launch the application.
 
-5. When the application is running, to examine full application functionality login as admin:
-   User name: admin@email.cz
+5. When the application is running, login to the application as admin to 
+   examine full application functionality:
+   Email:     admin@email.cz
    Password:  Admin123
 
 6. You can also login as one of following common users, with limited functionality:
-   User name                    Password
+   Email:                       Password:
    jan.novak@email.cz           Jan.novak0
    petr.benda@email.cz          Petr.benda0
    frantisek.fiala@email.cz     Frantisek.fiala0
