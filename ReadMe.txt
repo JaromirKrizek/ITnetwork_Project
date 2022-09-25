@@ -1,20 +1,29 @@
 
+###################################################################################################
+About web application Insurance_ASP - Jaromír Køížek 2022-09
+###################################################################################################
 
-About web application Insurance_ASP
+This application was created by Jaromír Køížek as a part of an educational course 
+focused on the development of web applications using C# .NET ASP MVC core.
 
-1. Clone this GitHub repository containing project Insurance_ASP to your local computer.
+You can try and test the application in the following steps:
 
-2. Open solution Project.sln in Visual Studio (developed in VS 2022).
+1. Clone this GitHub repository containing project Insurance_ASP to your local computer:
+   If you use GitBash, create an empty folder, open Git console window and type command:
+   git clone https://github.com/JaromirKrizek/ITnetwork_Project.git
+
+2. When the repository is downloaded to your local folder,
+   open solution Project.sln in Visual Studio (developed in VS 2022).
 
 3. Migrate application database to your local MSSQLLocalDb server:
-    - Go to Menu Tools -> NuGet Package Manager -> Package Manager Console
+    - In Visual Studio go to Menu Tools -> NuGet Package Manager -> Package Manager Console.
     - In Package Manager Console window type these 2 commands:
       PM> Add-Migration Migrate_Database
       PM> Update-Database
 
 4. Press F5 to launch the application.
 
-5. To examine full application functionality login as Admin:
+5. When the application is running, to examine full application functionality login as admin:
    User name: admin@email.cz
    Password:  Admin123
 
