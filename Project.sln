@@ -5,8 +5,6 @@ VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insurance_ASP", "Insurance_ASP\Insurance_ASP.csproj", "{F5C0C237-FC32-4A06-B4C2-EBA36062C2F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insurance_Console", "Insurance_Console\Insurance_Console.csproj", "{560AB2CA-0FF2-49D6-B93D-98E6F84116FD}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07C8CD95-6EE8-472F-9B9F-BEEA9722E4AA}"
 	ProjectSection(SolutionItems) = preProject
 		ReadMe.txt = ReadMe.txt
@@ -22,10 +20,6 @@ Global
 		{F5C0C237-FC32-4A06-B4C2-EBA36062C2F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5C0C237-FC32-4A06-B4C2-EBA36062C2F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5C0C237-FC32-4A06-B4C2-EBA36062C2F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{560AB2CA-0FF2-49D6-B93D-98E6F84116FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{560AB2CA-0FF2-49D6-B93D-98E6F84116FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{560AB2CA-0FF2-49D6-B93D-98E6F84116FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{560AB2CA-0FF2-49D6-B93D-98E6F84116FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
