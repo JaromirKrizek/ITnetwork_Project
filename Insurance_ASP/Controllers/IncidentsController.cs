@@ -28,7 +28,16 @@ namespace Insurance_ASP.Controllers
         //-----------------------------------------------------------------------------------------
         public async Task<IActionResult> Index(int? pageNumber)  // pageNumber přidáno pro paginaci
         {
-            var query = _context.Incident.Include(i => i.Insurance);
+            bool isAdminLogged = User.IsInRole("Admin");
+            string emailOfLoggedUser = User.Identity.Name;
+
+            // Pokud je v aplikaci právě přihlášen admin, vybereme z databáze všechny události,
+            // jinak vybereme pouze události, které patří právě přihlášenému uživateli.
+            var query = isAdminLogged ?
+                        _context.Incident.Include(i => i.Insurance) :
+                        _context.Incident.Include(i => i.Insurance)
+                          .Where(incident => incident.Insurance.Person.Email == emailOfLoggedUser);
+
             var model = await PaginatedList<Incident>.CreateAsync(query, pageNumber ?? 1, pageSize: 10);
             return View(model);
 

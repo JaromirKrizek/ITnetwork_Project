@@ -33,7 +33,15 @@ namespace Insurance_ASP.Controllers
         //-----------------------------------------------------------------------------------------
         public async Task<IActionResult> Index(int? pageNumber)  // pageNumber přidáno pro paginaci 
         {
-            var query = _context.Person;
+            bool isAdminLogged = User.IsInRole("Admin");
+            string emailOfLoggedUser = User.Identity.Name;
+
+            // Pokud je v aplikaci právě přihlášen admin, vybereme z databáze všechny pojištěnce,
+            // jinak vybereme pouze pojištěnce, který odpovídá právě přihlášenému uživateli.
+            var query = isAdminLogged ?
+                        _context.Person :
+                        _context.Person.Where(person => person.Email == emailOfLoggedUser);
+
             if (query != null)
             {
                 // PaginatedList zaveden kvůli paginaci ve view
