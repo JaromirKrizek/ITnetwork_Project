@@ -270,9 +270,25 @@ Insurance_ASP - Závìreèný projekt
    - Úprava ve view Persons/Edit.cshtml
       - Nastaveny defaultní hodnoty Password a ConfirmPassword, viz komantáø tam.
 
+  -------------------
+- launchSettings.json
+  -------------------
+   - Pøidán blok pro publikování a spouštìní na webu
+      - Pokud aplikaci publikujeme, je potøeba mít tento blok odkomentovaný a blok
+        pro lokální spouštìní zakomentovaný.
+      - Pokud chceme aplikaci sputit lokálnì, tak naopak.
+
+  ----------------
+- appsettings.json
+  ----------------
+   - Pøidán connection string pro publikování a spouštìní na webu
+      - Pokud aplikaci publikujeme, je potøeba mít tento connection string odkomentovaný a 
+        connection string pro pro lokální spuštìní zakomentovaný.
+      - Pokud chceme aplikaci sputit lokálnì, tak naopak.
+
 ###################################################################################################
 Zprovoznìní projektu
-##################################################################################################
+###################################################################################################
 
 Klonování repozitáøe z GitHubu
 
