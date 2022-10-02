@@ -286,6 +286,15 @@ Insurance_ASP - Závìreèný projekt
         connection string pro pro lokální spuštìní zakomentovaný.
       - Pokud chceme aplikaci sputit lokálnì, tak naopak.
 
+
+  --------------------------
+- Pøidána stránka O aplikaci
+  --------------------------
+   - Do HomeControlleru pøidána akce About
+   - Pøidáno view Views\Home\About.cshtml
+   - Do navigace ve Views\Shared\_Layout.cshtml pøidán odkaz na stánku O aplikaci
+   - Na úvodní stránku ve Views\Home\Index.cshtml pøidán odkaz na stánku O aplikaci (Jak zaèít?)
+
 ###################################################################################################
 Zprovoznìní projektu
 ###################################################################################################

@@ -1,6 +1,6 @@
 ﻿<!------------------------------------------------------------------------------------------------- 
 - Toto view obsluhuje metodu HomeController.Index  
-- Zobrazuje seznam pojištěnců
+- Zobrazuje úvodní stránku aplikace
 - Nejedná se o kompletní stránku, ale pouze o její část, která se vloží do layoutu.
 - Znak zavináč uvádí C# kód v HTML souboru, takzvaý Razor.
 -------------------------------------------------------------------------------------------------->
@@ -23,6 +23,9 @@ Obsah vkládané stránky
     <!-- Tlačítka na seznamy pojištěnců, pojištění, pojistných událostí -->
     <a asp-controller="Persons" asp-action="Index" class="btn btn-primary btn-custom mb-3">Pojištěnci</a>
     <a asp-controller="Insurances" asp-action="Index" class="btn btn-primary btn-custom mb-3">Pojištění</a>
-    <a asp-controller="Incidents" asp-action="Index" class="btn btn-primary btn-custom">Události</a>
+    <a asp-controller="Incidents" asp-action="Index" class="btn btn-primary btn-custom mb-3">Události</a>
+
+    <!-- Odkaz na stránku O aplikaci -->
+    <a asp-controller="Home" asp-action="About">Jak začít?</a>
 
 </div>

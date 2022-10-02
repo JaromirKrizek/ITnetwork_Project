@@ -1,0 +1,64 @@
+﻿<!------------------------------------------------------------------------------------------------- 
+- Toto view obsluhuje metodu HomeController.About
+- Zobrazuje informace o aplikaci
+- Nejedná se o kompletní stránku, ale pouze o její část, která se vloží do layoutu.
+- Znak zavináč uvádí C# kód v HTML souboru, takzvaý Razor.
+-------------------------------------------------------------------------------------------------->
+
+<!-- Toto view nemá definovanou žádnou modelovou třídu -->
+
+@{
+    ViewData["Title"] = "O aplikaci";  // Upraveno - Nastavení titulku
+}
+
+<!-------------------------------------------------------------------------------------------------
+Obsah vkládané stránky 
+-------------------------------------------------------------------------------------------------->
+
+<div class="center-800">
+
+    <h1>@ViewData["Title"]</h1>
+
+    <ul class="mb-4">
+        <li>Aplikace vznikla jako závěrečný projekt v rámci akreditovaného vzdělávacího kurzu 
+            MSMT-1493/2022-7 "Programátor www aplikací v C# .NET".</li>
+
+        <li>Aplikace spravuje databázi pojištěnců, jejich pojistných smluv a 
+            pojistných událostí.</li>
+    </ul>
+
+    <h1 class="mb-3">Vyzkoušejte aplikaci</h1>
+
+    <h3>Zaregistrujte se jako nový uživatel</h3>
+    <ul>
+        <li>Do aplikace se můžete 
+            <a asp-area="Identity" asp-controller="Account" asp-action="Register">zaregistrovat</a>
+            jako nový uživatel.</li>
+        <li>Pokud se následně 
+            <a asp-area="Identity" asp-controller="Account" asp-action="Login">přihlásíte</a>
+            jako administrátor (viz niže), můžete novému uživateli 
+            přidávat pojistné smlouvy a pojistné události.</li>
+    </ul>
+
+    <h3>Přihlaste se jako administrátor</h3>
+    <ul>
+        <li>Pro vyzkoušení většiny funkcí se můžete 
+            <a asp-area="Identity" asp-controller="Account" asp-action="Login">přihlásit</a>
+            jako administrátor:</li>
+        <li>Email: admin@email.cz, heslo: Admin123</li>
+        <li>Jako administrátor máte přístup k evidenci všech pojištěnců, jejich pojistných smluv a 
+            pojistných událostí.</li>
+        <li>S pojištěnci, smlouvami a událostmi můžete provádět všechny základní operace: 
+            přidávat nové, editovat je a mazat.</li>
+    </ul>
+
+    <h3>Přihlaste se jako stávající uživatel</h3>
+    <ul>
+        <li>Pokud se 
+            <a asp-area="Identity" asp-controller="Account" asp-action="Login">přihlásíte</a>
+            jako stávající uživatel, v aplikaci se vám 
+            zobrazí jeho smlouvy a pojstné události v režimu pro čtení.</li>
+    </ul>
+
+</div>
+
