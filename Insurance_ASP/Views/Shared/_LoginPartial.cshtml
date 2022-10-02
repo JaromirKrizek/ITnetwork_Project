@@ -7,9 +7,18 @@
 {
     <li class="nav-item">
         <!-- Upraveno JK!!! -->
-        <a class="nav-link text-light" 
-           asp-area="Identity" asp-controller="Account" 
-           asp-action="ChangePassword">@User.Identity?.Name</a>
+        @if (User.IsInRole("Admin"))
+        {
+            <!-- Znemožňuje změnit heslo administrátorského účtu -->
+            <a class="nav-link text-light disabled" href="#">@User.Identity?.Name</a>
+        }
+        else
+        {
+            <!-- Pokud účet není administrátorský (je to běžný uživatel) je možné změnit heslo -->
+            <a class="nav-link text-light" 
+               asp-area="Identity" asp-controller="Account" 
+               asp-action="ChangePassword">@User.Identity?.Name</a>
+        }
     </li>
     <li class="nav-item">
         <!-- Upraveno JK!!! -->

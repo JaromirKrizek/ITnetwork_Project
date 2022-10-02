@@ -295,6 +295,12 @@ Insurance_ASP - Závìreèný projekt
    - Do navigace ve Views\Shared\_Layout.cshtml pøidán odkaz na stánku O aplikaci
    - Na úvodní stránku ve Views\Home\Index.cshtml pøidán odkaz na stánku O aplikaci (Jak zaèít?)
 
+  ----------------------------------------------
+- Znemožnìní zmìny hesla administrátorského úètu
+  ----------------------------------------------
+   - Ve Views\Shared\_LoginPartial.csthml pøidána podmínka znemožòující zmìnu hesla 
+     administrátorského úètu  
+
 ###################################################################################################
 Zprovoznìní projektu
 ###################################################################################################
