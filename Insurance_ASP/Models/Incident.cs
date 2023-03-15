@@ -43,6 +43,7 @@ namespace Insurance_ASP.Models
         public int InsuranceId { get; set; }  // Cizí klíč na pojištění
 
         // Díky slovu virtual tato vlastnost v db tabulce nebude.
+        // Usually virtual properties are being used by Entity Framework for the lazy loading of related objects.
         public virtual Insurance Insurance { get; set; }  // Odkaz na pojištění
 
         //-----------------------------------------------------------------------------------------

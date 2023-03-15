@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;  // Atributy u členských proměnných, např [Required]
 using System.ComponentModel.DataAnnotations.Schema;  // DatabaseGenerated
+using System.Net.NetworkInformation;
+using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Mvc.Rendering;  // SelectListItem - pro renderování v html
 
 namespace Insurance_ASP.Models
@@ -49,12 +51,14 @@ namespace Insurance_ASP.Models
         public int PersonId { get; set; }  // Cizí klíč na pojištěného
 
         // Díky slovu virtual tato vlastnost v db tabulce nebude.
+        // Usually virtual properties are being used by Entity Framework for the lazy loading of related objects.
         public virtual Person Person { get; set; }  // Odkaz na pojištěného
 
         //--------------------------------------------------------------------------
         // Navigační vlastnosti - Vazba 1:N mezi entitami Insurance |- --<| Incident
         //--------------------------------------------------------------------------
         // Díky slovu virtual tato vlastnost v db tabulce nebude.
+        // Usually virtual properties are being used by Entity Framework for the lazy loading of related objects.
         public virtual ICollection<Incident> Incidents { get; set; }
 
         //-----------------------------------------------------------------------------------------

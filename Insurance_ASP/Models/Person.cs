@@ -50,6 +50,7 @@ namespace Insurance_ASP.Models
         // Navigační vlastnosti - Vazba 1:N mezi entitami Person |- --<| Insurance
         //------------------------------------------------------------------------
         // Díky slovu virtual tato vlastnost v db tabulce nebude.
+        // Usually virtual properties are being used by Entity Framework for the lazy loading of related objects.
         public virtual ICollection<Insurance> Insurances { get; set; }
 
         //----------------------------------------------------------------------------
@@ -62,7 +63,7 @@ namespace Insurance_ASP.Models
         [Display(Name = "Heslo")]
         public virtual string Password { get; set; }
 
-        [NotMapped]
+        [NotMapped]  // Tato vlastnost nebude v databázové tabulce
         [Required(ErrorMessage = "Zadejte heslo")]
         [Compare("Password", ErrorMessage = "Zadaná hesla se neshodují")]
         [DataType(DataType.Password)]
